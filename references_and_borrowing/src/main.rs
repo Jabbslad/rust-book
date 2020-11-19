@@ -19,6 +19,21 @@ fn main() {
     println!("{}", r3);
 
     println!("no dangle: {}", no_dangle());
+
+    let mut hello = String::from("Hello world!");
+    let f = first(&hello);
+    //hello.clear(); -- cannot do mutable borrow here.
+    println!("first = '{}'", f);
+}
+
+fn first(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i];
+        }
+    }
+    &s[..]
 }
 
 fn calculate_length(s: &String) -> usize {
